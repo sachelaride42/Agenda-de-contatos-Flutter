@@ -1,5 +1,6 @@
 import 'package:agenda_de_contatos/models/contato.dart';
 import 'package:agenda_de_contatos/models/repositorioContatos.dart';
+import 'package:agenda_de_contatos/views/edicao_exclusao.dart';
 import 'package:flutter/material.dart';
 
 class Cadastro extends StatefulWidget {
@@ -34,14 +35,27 @@ class CadastroState extends State<Cadastro> {
         children: [
           Expanded(
               child: ListView.builder(
-                  itemCount: repositorio.getListaDeContatos().length,
-                  itemBuilder: (context, index) {
-                    Contato c = repositorio.getListaDeContatos()[index];
-                    return ListTile(
-                        title: Text(c.getNome()),
-                        subtitle: Text(
-                            'Tel: ${c.getTelefone()}; Email: ${c.getEmail()}'));
-                  })),
+            itemCount: repositorio.getListaDeContatos().length,
+            itemBuilder: (context, index) {
+              Contato c = repositorio.getListaDeContatos()[index];
+              return ListTile(
+                  title: Text(c.getNome()),
+                  subtitle:
+                      Text('Tel: ${c.getTelefone()}; Email: ${c.getEmail()}'),
+                  onTap: () async {
+                    final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EdicaoExclusao(
+                                contato: c, repo: repositorio, indice: index)));
+                    if (result == true) {
+                      setState(() {});
+                      Navigator.pop(context, true);
+                    }
+                  });
+            },
+          )),
+          Text("Para editar ou excluir, selecione um contato"),
           TextField(
             controller: controleNome,
             decoration: InputDecoration(hintText: "Nome"),

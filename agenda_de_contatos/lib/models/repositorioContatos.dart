@@ -10,4 +10,13 @@ class RepositorioContatos {
   List<Contato> getListaDeContatos() {
     return listaDeContatos;
   }
+
+  Contato getElemento(int index) {
+    Contato contato = listaDeContatos.elementAt(index);
+    return contato;
+  }
+
+  void deleteContato(int index) {
+    listaDeContatos.removeAt(index);
+  }
 }
