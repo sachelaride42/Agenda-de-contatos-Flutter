@@ -56,28 +56,33 @@ class CadastroState extends State<Cadastro> {
             },
           )),
           Text("Para editar ou excluir, selecione um contato"),
-          TextField(
+          TextFormField(
             controller: controleNome,
-            decoration: InputDecoration(hintText: "Nome"),
+            decoration:
+                InputDecoration(labelText: "Nome", hintText: "Insira o nome"),
           ),
           TextField(
             controller: controleTelefone,
-            decoration: InputDecoration(hintText: "Telefone"),
+            decoration: InputDecoration(
+                labelText: "Telefone", hintText: "(XX) XXXXX-XXXX"),
           ),
-          TextField(
-            controller: controleEmail,
-            decoration: InputDecoration(hintText: "Email"),
-          ),
+          TextFormField(
+              controller: controleEmail,
+              decoration: InputDecoration(
+                  labelText: "Email", hintText: "email@exemplo.com")),
           TextButton(
             onPressed: () {
-              setState(() {
-                Contato contact = Contato(
-                    nome: controleNome.text,
-                    telefone: controleTelefone.text,
-                    email: controleEmail.text);
-                repositorio.addContato(contact);
-              });
-              Navigator.pop(context, true);
+              if (validaContato(
+                  context, controleNome, controleTelefone, controleEmail)) {
+                setState(() {
+                  Contato contact = Contato(
+                      nome: controleNome.text,
+                      telefone: controleTelefone.text,
+                      email: controleEmail.text);
+                  repositorio.addContato(contact);
+                });
+                Navigator.pop(context, true);
+              }
             },
             child: Text("Salvar"),
           )
@@ -85,4 +90,51 @@ class CadastroState extends State<Cadastro> {
       )),
     );
   }
+}
+
+bool validaContato(BuildContext context, TextEditingController cNome,
+    TextEditingController cTelefone, TextEditingController cEmail) {
+  RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  RegExp phoneRegExp = RegExp(r'^\(\d{2}\) \d{5}-\d{4}$');
+
+  if (cNome.text.isEmpty) {
+    mostrarErro(context, "Por favor, preencha o nome");
+    return false;
+  }
+
+  if (cTelefone.text.isEmpty) {
+    mostrarErro(context, "Por favor, insira o telefone");
+    return false;
+  } else if (!phoneRegExp.hasMatch(cTelefone.text)) {
+    mostrarErro(context, "Formato de telefone inválido, use (XX) XXXXX-XXXX");
+    return false;
+  }
+
+  if (cEmail.text.isEmpty) {
+    mostrarErro(context, "Por favor, insira o email");
+    return false;
+  } else if (!emailRegExp.hasMatch(cEmail.text)) {
+    mostrarErro(context, "Formato de email inválido");
+    return false;
+  }
+
+  return true;
+}
+
+void mostrarErro(BuildContext context, String mensagem) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: Text("Erro"),
+            content: Text(mensagem),
+            actions: [
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ]);
+      });
 }

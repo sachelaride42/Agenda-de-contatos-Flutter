@@ -1,5 +1,6 @@
 import 'package:agenda_de_contatos/models/contato.dart';
 import 'package:agenda_de_contatos/models/repositorioContatos.dart';
+import 'package:agenda_de_contatos/views/cadastro.dart';
 import 'package:flutter/material.dart';
 
 class EdicaoExclusao extends StatefulWidget {
@@ -55,14 +56,19 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
         TextField(controller: controleEmail),
         TextButton(
             onPressed: () {
-              widget.repo.getElemento(widget.indice).setNome(controleNome.text);
-              widget.repo
-                  .getElemento(widget.indice)
-                  .setTelefone(controleTelefone.text);
-              widget.repo
-                  .getElemento(widget.indice)
-                  .setEmail(controleEmail.text);
-              Navigator.pop(context, true);
+              if (validaContato(
+                  context, controleNome, controleTelefone, controleEmail)) {
+                widget.repo
+                    .getElemento(widget.indice)
+                    .setNome(controleNome.text);
+                widget.repo
+                    .getElemento(widget.indice)
+                    .setTelefone(controleTelefone.text);
+                widget.repo
+                    .getElemento(widget.indice)
+                    .setEmail(controleEmail.text);
+                Navigator.pop(context, true);
+              }
             },
             child: Text("Salvar edição")),
         TextButton(
