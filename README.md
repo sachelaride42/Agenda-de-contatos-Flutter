@@ -28,6 +28,7 @@ Caso queira gerar um APK ou IPA para distribuição em dispositivos:
 - Para Android: flutter build apk
 
 Estrutura do Projeto
+
 O projeto segue uma estrutura organizada, separada em telas, modelo de dados e repositório. Aqui está um resumo da organização dos arquivos:
 - lib/: Contém todos os arquivos do projeto Flutter.
 - models/: Contém a classe Contato que representa a entidade do contato e a classe RepositorioContatos responsável pela manipulação de dados.
@@ -35,6 +36,7 @@ O projeto segue uma estrutura organizada, separada em telas, modelo de dados e r
 - main.dart: Arquivo principal do projeto.
 
 Funcionalidades Implementadas
+
 Adicionar contato: Preencha os campos de nome, telefone e email e adicione o contato à lista.
 Editar contato: Selecione um contato e edite as informações.
 Excluir contato: Remova um contato da lista de contatos.
