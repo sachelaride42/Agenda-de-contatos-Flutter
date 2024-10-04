@@ -1,15 +1,15 @@
 import 'package:agenda_de_contatos/models/contato.dart';
-import 'package:agenda_de_contatos/models/repositorioContatos.dart';
+import 'package:agenda_de_contatos/models/agendaController.dart';
 import 'package:agenda_de_contatos/views/cadastro.dart';
 import 'package:flutter/material.dart';
 
 class EdicaoExclusao extends StatefulWidget {
   final Contato contato;
-  final RepositorioContatos repo;
+  final AgendaController repo;
   final int indice;
 
-  EdicaoExclusao(
-      {required this.contato, required this.repo, required this.indice});
+  const EdicaoExclusao(
+      {super.key, required this.contato, required this.repo, required this.indice});
 
   @override
   State<StatefulWidget> createState() {
@@ -44,7 +44,7 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edição e exclusão"),
+        title: const Text("Edição e exclusão"),
       ),
       body: Center(
           child:
@@ -70,13 +70,13 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
                 Navigator.pop(context, true);
               }
             },
-            child: Text("Salvar edição")),
+            child: const Text("Salvar edição")),
         TextButton(
             onPressed: () {
               widget.repo.deleteContato(widget.indice);
               Navigator.pop(context, true);
             },
-            child: Text("Excluir"))
+            child: const Text("Excluir"))
       ])),
     );
   }

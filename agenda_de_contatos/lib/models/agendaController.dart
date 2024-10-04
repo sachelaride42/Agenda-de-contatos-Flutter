@@ -1,6 +1,6 @@
 import 'package:agenda_de_contatos/models/contato.dart';
 
-class RepositorioContatos {
+class AgendaController {
   List<Contato> listaDeContatos = [];
 
   void addContato(Contato c) {

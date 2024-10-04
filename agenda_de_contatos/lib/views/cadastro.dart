@@ -1,12 +1,12 @@
 import 'package:agenda_de_contatos/models/contato.dart';
-import 'package:agenda_de_contatos/models/repositorioContatos.dart';
+import 'package:agenda_de_contatos/models/agendaController.dart';
 import 'package:agenda_de_contatos/views/edicao_exclusao.dart';
 import 'package:flutter/material.dart';
 
 class Cadastro extends StatefulWidget {
-  final RepositorioContatos rC;
+  final AgendaController rC;
 
-  Cadastro({required this.rC});
+  const Cadastro({super.key, required this.rC});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,7 +15,7 @@ class Cadastro extends StatefulWidget {
 }
 
 class CadastroState extends State<Cadastro> {
-  RepositorioContatos repositorio;
+  AgendaController repositorio;
 
   CadastroState({required this.repositorio});
 
@@ -27,7 +27,7 @@ class CadastroState extends State<Cadastro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastro e edição de Contatos"),
+        title: const Text("Cadastro e edição de Contatos"),
       ),
       body: Center(
           child: Column(
@@ -55,20 +55,20 @@ class CadastroState extends State<Cadastro> {
                   });
             },
           )),
-          Text("Para editar ou excluir, selecione um contato"),
+          const Text("Para editar ou excluir, selecione um contato"),
           TextFormField(
             controller: controleNome,
             decoration:
-                InputDecoration(labelText: "Nome", hintText: "Insira o nome"),
+                const InputDecoration(labelText: "Nome", hintText: "Insira o nome"),
           ),
           TextField(
             controller: controleTelefone,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 labelText: "Telefone", hintText: "(XX) XXXXX-XXXX"),
           ),
           TextFormField(
               controller: controleEmail,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText: "Email", hintText: "email@exemplo.com")),
           TextButton(
             onPressed: () {
@@ -84,7 +84,7 @@ class CadastroState extends State<Cadastro> {
                 Navigator.pop(context, true);
               }
             },
-            child: Text("Salvar"),
+            child: const Text("Salvar"),
           )
         ],
       )),
@@ -126,11 +126,11 @@ void mostrarErro(BuildContext context, String mensagem) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-            title: Text("Erro"),
+            title: const Text("Erro"),
             content: Text(mensagem),
             actions: [
               TextButton(
-                child: Text("OK"),
+                child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
