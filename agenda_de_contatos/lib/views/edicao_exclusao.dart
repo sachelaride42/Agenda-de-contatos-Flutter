@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class EdicaoExclusao extends StatefulWidget {
   final Contato contato;
-  final AgendaController repo;
+  final AgendaController aController;
   final int indice;
 
   const EdicaoExclusao(
-      {super.key, required this.contato, required this.repo, required this.indice});
+      {super.key, required this.contato, required this.aController, required this.indice});
 
   @override
   State<StatefulWidget> createState() {
@@ -55,26 +55,21 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
         TextField(controller: controleTelefone),
         TextField(controller: controleEmail),
         TextButton(
-            onPressed: () {
-              if (validaContato(
-                  context, controleNome, controleTelefone, controleEmail)) {
-                widget.repo
-                    .getElemento(widget.indice)
-                    .setNome(controleNome.text);
-                widget.repo
-                    .getElemento(widget.indice)
-                    .setTelefone(controleTelefone.text);
-                widget.repo
-                    .getElemento(widget.indice)
-                    .setEmail(controleEmail.text);
+            onPressed: () async {
+              if (validaContato(context, controleNome, controleTelefone, controleEmail)) {
+                Contato contato = Contato(nome: controleNome.text, telefone: controleTelefone.text, email: controleEmail.text);
+                await widget.aController.atualizarContato(contato);
                 Navigator.pop(context, true);
               }
             },
             child: const Text("Salvar edição")),
         TextButton(
-            onPressed: () {
-              widget.repo.deleteContato(widget.indice);
-              Navigator.pop(context, true);
+            onPressed: () async {
+              if (validaContato(context, controleNome, controleTelefone, controleEmail)) {
+                Contato contato = Contato(nome: controleNome.text, telefone: controleTelefone.text, email: controleEmail.text);
+                await widget.aController.deleteContato(contato);
+                Navigator.pop(context, true);
+              }
             },
             child: const Text("Excluir"))
       ])),

@@ -4,13 +4,13 @@ import 'package:agenda_de_contatos/views/edicao_exclusao.dart';
 import 'package:flutter/material.dart';
 
 class Cadastro extends StatefulWidget {
-  final AgendaController rC;
+  final AgendaController aC;
 
-  const Cadastro({super.key, required this.rC});
+  const Cadastro({super.key, required this.aC});
 
   @override
   State<StatefulWidget> createState() {
-    return CadastroState(repositorio: rC);
+    return CadastroState(repositorio: aC);
   }
 }
 
@@ -34,27 +34,45 @@ class CadastroState extends State<Cadastro> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-              child: ListView.builder(
-            itemCount: repositorio.getListaDeContatos().length,
-            itemBuilder: (context, index) {
-              Contato c = repositorio.getListaDeContatos()[index];
-              return ListTile(
-                  title: Text(c.getNome()),
-                  subtitle:
-                      Text('Tel: ${c.getTelefone()}; Email: ${c.getEmail()}'),
-                  onTap: () async {
-                    final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EdicaoExclusao(
-                                contato: c, repo: repositorio, indice: index)));
-                    if (result == true) {
-                      setState(() {});
-                      Navigator.pop(context, true);
+              child: FutureBuilder<List<Contato>>(
+                  future: widget.aC.getListaContatos(),
+                  builder: (context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return Center(child: CircularProgressIndicator());
                     }
-                  });
-            },
-          )),
+                    else if (snapshot.hasError){
+                      return Center(child: Text("Erro ao carregar contatos"));
+                    }
+                    else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                      return Center(child: Text("Nenhum contato encontrado"));
+                    }else{
+                      return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            Contato c = snapshot.data![index];
+                            return ListTile(
+                              title: Text(c.getNome()),
+                              subtitle: Text('Tel: ${c.getTelefone()}; Email: ${c.getEmail()}'),
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EdicaoExclusao(
+                                                  contato: c,
+                                                  aController: repositorio,
+                                                  indice: index)));
+                                  if (result == true) {
+                                    setState(() {});
+                                    Navigator.pop(context, true);
+                                  }
+                                }
+                            );
+                          }
+                      );
+                    }
+                  }
+              )),
           const Text("Para editar ou excluir, selecione um contato"),
           TextFormField(
             controller: controleNome,
@@ -74,13 +92,14 @@ class CadastroState extends State<Cadastro> {
             onPressed: () {
               if (validaContato(
                   context, controleNome, controleTelefone, controleEmail)) {
-                setState(() {
                   Contato contact = Contato(
-                      nome: controleNome.text,
-                      telefone: controleTelefone.text,
-                      email: controleEmail.text);
+                  nome: controleNome.text,
+                  telefone: controleTelefone.text,
+                  email: controleEmail.text);
                   repositorio.addContato(contact);
-                });
+                  setState(() {
+
+                  });
                 Navigator.pop(context, true);
               }
             },

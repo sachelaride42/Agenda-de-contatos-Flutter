@@ -1,22 +1,22 @@
+import 'package:agenda_de_contatos/DAO/agendaDAO.dart';
 import 'package:agenda_de_contatos/models/contato.dart';
 
 class AgendaController {
-  List<Contato> listaDeContatos = [];
+  AgendaDAO agendaDAO = AgendaDAO();
 
-  void addContato(Contato c) {
-    listaDeContatos.add(c);
+  Future<void> addContato(Contato c) async {
+    await agendaDAO.inserirContato(c);
   }
 
-  List<Contato> getListaDeContatos() {
-    return listaDeContatos;
+  Future<List<Contato>> getListaContatos() async {
+    return await agendaDAO.obterListaContatos();
   }
 
-  Contato getElemento(int index) {
-    Contato contato = listaDeContatos.elementAt(index);
-    return contato;
+  Future <void> atualizarContato (Contato contato) async {
+    await agendaDAO.atualizarContato(contato);
   }
 
-  void deleteContato(int index) {
-    listaDeContatos.removeAt(index);
+  Future<void> deleteContato(Contato contato) async {
+    await agendaDAO.excluirContato(contato);
   }
 }
