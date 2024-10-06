@@ -13,6 +13,15 @@ class AgendaDAO{
     }, version: 1);
   }
 
+  Future<void> inicializarDB() async {
+    String path = join(await getDatabasesPath(), 'meu_banco.db');
+    await openDatabase(path, onCreate: (db, version) {
+      return db.execute(
+        "CREATE TABLE contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT, email TEXT)",
+      );
+    }, version: 1);
+  }
+
   Future<void> inserirContato(Contato contato) async {
     final Database db = await initializeDB();
     await db.insert('contatos', contato.toMap());
