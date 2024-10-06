@@ -10,14 +10,14 @@ class Cadastro extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return CadastroState(repositorio: aC);
+    return CadastroState(aController: aC);
   }
 }
 
 class CadastroState extends State<Cadastro> {
-  AgendaController repositorio;
+  AgendaController aController;
 
-  CadastroState({required this.repositorio});
+  CadastroState({required this.aController});
 
   TextEditingController controleNome = TextEditingController();
   TextEditingController controleTelefone = TextEditingController();
@@ -38,13 +38,13 @@ class CadastroState extends State<Cadastro> {
                   future: widget.aC.getListaContatos(),
                   builder: (context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                     else if (snapshot.hasError){
-                      return Center(child: Text("Erro ao carregar contatos"));
+                      return const Center(child: Text("Erro ao carregar contatos"));
                     }
                     else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                      return Center(child: Text("Nenhum contato encontrado"));
+                      return const Center(child: Text("Nenhum contato encontrado"));
                     }else{
                       return ListView.builder(
                           itemCount: snapshot.data!.length,
@@ -60,8 +60,8 @@ class CadastroState extends State<Cadastro> {
                                           builder: (context) =>
                                               EdicaoExclusao(
                                                   contato: c,
-                                                  aController: repositorio,
-                                                  indice: index)));
+                                                  aController: aController,
+                                                  )));
                                   if (result == true) {
                                     setState(() {});
                                     Navigator.pop(context, true);
@@ -89,14 +89,14 @@ class CadastroState extends State<Cadastro> {
               decoration: const InputDecoration(
                   labelText: "Email", hintText: "email@exemplo.com")),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (validaContato(
                   context, controleNome, controleTelefone, controleEmail)) {
                   Contato contact = Contato(
                   nome: controleNome.text,
                   telefone: controleTelefone.text,
                   email: controleEmail.text);
-                  repositorio.addContato(contact);
+                  await aController.addContato(contact);
                   setState(() {
 
                   });

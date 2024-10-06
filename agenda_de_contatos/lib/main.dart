@@ -2,9 +2,8 @@ import 'package:agenda_de_contatos/models/agendaController.dart';
 import 'package:agenda_de_contatos/views/listagem.dart';
 import 'package:flutter/material.dart';
 
-import 'DAO/agendaDAO.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   AgendaController aController = AgendaController();

@@ -26,13 +26,13 @@ class Listagem_State extends State<Listagem> {
                     future: widget.agendaController.getListaContatos(),
                     builder: (context, snapshot) {
                       if(snapshot.connectionState == ConnectionState.waiting){
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       else if (snapshot.hasError){
-                        return Center(child: Text("Erro ao carregar contatos"));
+                        return const Center(child: Text("Erro ao carregar contatos"));
                       }
                       else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                        return Center(child: Text("Nenhum contato encontrado"));
+                        return const Center(child: Text("Nenhum contato encontrado"));
                       }else{
                         return ListView.builder(
                           itemCount: snapshot.data!.length,
@@ -40,7 +40,7 @@ class Listagem_State extends State<Listagem> {
                             Contato c = snapshot.data![index];
                             return ListTile(
                               title: Text(c.getNome()),
-                              subtitle: Text('Tel: ${c.getTelefone()}; Email: ${c.getEmail()}'),
+                              subtitle: Text('Tel: ${c.getTelefone()}; Email: ${c.getEmail()};'),
                             );
                           }
                         );

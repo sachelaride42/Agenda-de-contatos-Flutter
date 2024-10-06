@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 class EdicaoExclusao extends StatefulWidget {
   final Contato contato;
   final AgendaController aController;
-  final int indice;
 
   const EdicaoExclusao(
-      {super.key, required this.contato, required this.aController, required this.indice});
+      {super.key, required this.contato, required this.aController});
 
   @override
   State<StatefulWidget> createState() {
@@ -57,8 +56,11 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
         TextButton(
             onPressed: () async {
               if (validaContato(context, controleNome, controleTelefone, controleEmail)) {
-                Contato contato = Contato(nome: controleNome.text, telefone: controleTelefone.text, email: controleEmail.text);
-                await widget.aController.atualizarContato(contato);
+                widget.contato.setNome(controleNome.text);
+                widget.contato.setTelefone(controleTelefone.text);
+                widget.contato.setEmail(controleNome.text);
+
+                await widget.aController.atualizarContato(widget.contato);
                 Navigator.pop(context, true);
               }
             },
@@ -66,8 +68,7 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
         TextButton(
             onPressed: () async {
               if (validaContato(context, controleNome, controleTelefone, controleEmail)) {
-                Contato contato = Contato(nome: controleNome.text, telefone: controleTelefone.text, email: controleEmail.text);
-                await widget.aController.deleteContato(contato);
+                await widget.aController.deleteContato(widget.contato);
                 Navigator.pop(context, true);
               }
             },

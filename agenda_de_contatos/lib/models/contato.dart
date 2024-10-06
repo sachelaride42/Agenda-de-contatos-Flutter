@@ -1,12 +1,14 @@
 class Contato {
+  int? id;
   String nome;
   String telefone;
   String email;
 
-  Contato({required this.nome, required this.telefone, required this.email});
+  Contato({this.id, required this.nome, required this.telefone, required this.email});
 
   factory Contato.fromMap(Map<String, dynamic> map) {
     return Contato(
+      id: map['id'],
       nome: map['nome'],
       telefone: map['telefone'],
       email: map['email'],
@@ -15,10 +17,19 @@ class Contato {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'nome': nome,
       'telefone': telefone,
       'email': email,
     };
+  }
+
+  void setId(int id){
+    this.id = id;
+  }
+
+  int? getId(){
+    return id;
   }
 
   void setNome(String nome) {

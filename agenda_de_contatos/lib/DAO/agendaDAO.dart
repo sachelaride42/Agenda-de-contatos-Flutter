@@ -24,7 +24,8 @@ class AgendaDAO{
 
   Future<void> inserirContato(Contato contato) async {
     final Database db = await initializeDB();
-    await db.insert('contatos', contato.toMap());
+    int id = await db.insert('contatos', contato.toMap());
+    contato.setId(id);
   }
 
   Future<List<Contato>> obterListaContatos() async {
@@ -37,12 +38,12 @@ class AgendaDAO{
 
   Future<void> atualizarContato(Contato contato) async{
     final Database db = await initializeDB();
-    await db.update('contatos', contato.toMap(), where: 'nome = ? AND telefone = ?', whereArgs: [contato.nome, contato.telefone]);
+    await db.update('contatos', contato.toMap(), where: 'id = ?', whereArgs: [contato.id]);
   }
 
   Future<void> excluirContato(Contato contato) async{
     final Database db = await initializeDB();
-    await db.delete('contatos', where: 'nome = ? AND telefone = ?', whereArgs: [contato.nome, contato.telefone]);
+    await db.delete('contatos', where: 'id = ?', whereArgs: [contato.id]);
   }
 
 }
