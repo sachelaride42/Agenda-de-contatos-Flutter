@@ -32,7 +32,9 @@ class Listagem_State extends State<Listagem> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Lista de Contatos")),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        body: Column(crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
             Expanded(
                 child: FutureBuilder<List<Contato>>(
                     future: _futureContatos,
