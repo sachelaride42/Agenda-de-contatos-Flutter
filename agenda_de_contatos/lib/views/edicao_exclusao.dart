@@ -58,7 +58,7 @@ class EdicaoExclusaoState extends State<EdicaoExclusao> {
               if (validaContato(context, controleNome, controleTelefone, controleEmail)) {
                 widget.contato.setNome(controleNome.text);
                 widget.contato.setTelefone(controleTelefone.text);
-                widget.contato.setEmail(controleNome.text);
+                widget.contato.setEmail(controleEmail.text);
 
                 await widget.aController.atualizarContato(widget.contato);
                 Navigator.pop(context, true);
