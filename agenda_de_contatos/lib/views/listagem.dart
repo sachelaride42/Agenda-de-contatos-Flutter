@@ -22,6 +22,13 @@ class Listagem_State extends State<Listagem> {
     loadData();
   }
 
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    loadData();
+  }
+
   void loadData(){
     setState(() {
       _futureContatos = widget.agendaController.getListaContatos();
