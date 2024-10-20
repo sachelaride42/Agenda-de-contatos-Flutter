@@ -4,8 +4,8 @@ import 'package:agenda_de_contatos/views/cadastro.dart';
 import 'package:flutter/material.dart';
 
 class Listagem extends StatefulWidget {
-  final AgendaController agendaController = AgendaController();
-  Listagem({super.key);
+  AgendaController agendaController;
+  Listagem({super.key, required this.agendaController});
 
   @override
   State<StatefulWidget> createState() {

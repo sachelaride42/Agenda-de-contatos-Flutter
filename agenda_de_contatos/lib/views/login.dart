@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../models/agendaController.dart';
+import '../models/autenticacao/sharedSession.dart';
 import 'listagem.dart';
 
 class Login extends StatelessWidget{
+  Login({super.key, required this.agendaController});
+  AgendaController agendaController;
+  SharedSessao ssessao = SharedSessao();
+  TextEditingController c_usuario = TextEditingController();
+  TextEditingController c_senha = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    SharedSessao ssessao = SharedSessao();
-    TextEditingController c_usuario = TextEditingController();
-    TextEditingController c_senha = TextEditingController();
+
 
     return Scaffold(
       appBar: AppBar(title: Text("Login"),),
@@ -24,7 +30,7 @@ class Login extends StatelessWidget{
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Listagem()));
+                          builder: (context) => Listagem(agendaController: agendaController,)));
                 },),
                 ElevatedButton.icon(label: Text("Cadastrar"), icon: Icon(Icons.add_circle_outline_sharp), onPressed: (){}),]),
         ],),

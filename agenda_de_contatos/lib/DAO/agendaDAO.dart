@@ -7,10 +7,11 @@ class AgendaDAO{
   Future<Database> initializeDB() async {
     try{
       String path = join(await getDatabasesPath(), 'meu_banco.db');
-      return await openDatabase(path, onCreate: (db, version) {
-        return db.execute(
+      return await openDatabase(path, onCreate: (db, version) async {
+        await db.execute(
           "CREATE TABLE contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT, email TEXT)",
         );
+        await db.execute("CREATE TABLE login(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario TEXT, senha TEXT)");
       }, version: 1);
     }
     catch(e){
