@@ -5,21 +5,19 @@ import '../models/contato.dart';
 
 class AgendaDAO{
   Future<Database> initializeDB() async {
-    String path = join(await getDatabasesPath(), 'meu_banco.db');
-    return await openDatabase(path, onCreate: (db, version) {
-      return db.execute(
-        "CREATE TABLE contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT, email TEXT)",
-      );
-    }, version: 1);
-  }
+    try{
+      String path = join(await getDatabasesPath(), 'meu_banco.db');
+      return await openDatabase(path, onCreate: (db, version) {
+        return db.execute(
+          "CREATE TABLE contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT, email TEXT)",
+        );
+      }, version: 1);
+    }
+    catch(e){
+      print("Erro ao inicializar o banco de dados: $e");
+      rethrow;
+    }
 
-  Future<void> inicializarDB() async {
-    String path = join(await getDatabasesPath(), 'meu_banco.db');
-    await openDatabase(path, onCreate: (db, version) {
-      return db.execute(
-        "CREATE TABLE contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT, email TEXT)",
-      );
-    }, version: 1);
   }
 
   Future<void> inserirContato(Contato contato) async {

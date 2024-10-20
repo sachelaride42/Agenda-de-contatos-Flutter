@@ -14,33 +14,51 @@ class Listagem extends StatefulWidget {
 }
 
 class Listagem_State extends State<Listagem> {
+  late Future<List<Contato>> _futureContatos;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData(){
+    setState(() {
+      _futureContatos = widget.agendaController.getListaContatos();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Lista de Contatos")),
-        body: Center(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
                 child: FutureBuilder<List<Contato>>(
-                    future: widget.agendaController.getListaContatos(),
+                    future: _futureContatos,
                     builder: (context, snapshot) {
+                      print("Snapshot estado: ${snapshot.connectionState}");
                       if(snapshot.connectionState == ConnectionState.waiting){
                         return const Center(child: CircularProgressIndicator());
                       }
                       else if (snapshot.hasError){
+                        print("Erro no snapshot: ${snapshot.error}");
                         return const Center(child: Text("Erro ao carregar contatos"));
                       }
                       else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                        print("Nenhum contato encontrado");
                         return const Center(child: Text("Nenhum contato encontrado"));
                       }else{
+                        print("Contatos carregados: ${snapshot.data!.length}");
                         return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             Contato c = snapshot.data![index];
+                            print("Renderizando contato: ${c.getNome()}, ${c.getTelefone()}, ${c.getEmail()}");
                             return ListTile(
                               title: Text(c.getNome()),
                               subtitle: Text('Tel: ${c.getTelefone()}; Email: ${c.getEmail()};'),
+                              tileColor: Colors.blue.shade50,
                             );
                           }
                         );
@@ -48,20 +66,20 @@ class Listagem_State extends State<Listagem> {
                     }
                     )),
             TextButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Cadastro(
-                            aC: widget.agendaController,
-                            )));
-                if (result == true) {
-                  setState(() {});
-                }
-              },
-              child: const Text("Cadastrar / Editar"),
-            ),
+                onPressed: () async {
+                  final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Cadastro(
+                              aC: widget.agendaController,
+                              )));
+                  if (result == true) {
+                    loadData();
+                  }
+                },
+                child: const Text("Cadastrar / Editar"),
+              ),
           ]),
-        ));
+        );
   } //
 }
