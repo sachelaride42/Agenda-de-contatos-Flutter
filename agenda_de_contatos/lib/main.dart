@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AgendaController aController = AgendaController();
 
-  runApp(MaterialApp(home: Listagem(agendaController: aController)));
+  runApp(MaterialApp(home: Listagem()));
 }
