@@ -1,5 +1,5 @@
 import 'package:agenda_de_contatos/models/contato.dart';
-import 'package:agenda_de_contatos/models/agendaController.dart';
+import 'package:agenda_de_contatos/controller/agendaController.dart';
 import 'package:agenda_de_contatos/views/edicao_exclusao.dart';
 import 'package:flutter/material.dart';
 

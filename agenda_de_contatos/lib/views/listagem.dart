@@ -1,10 +1,14 @@
+import 'package:agenda_de_contatos/models/autenticacao/sharedSession.dart';
 import 'package:agenda_de_contatos/models/contato.dart';
-import 'package:agenda_de_contatos/models/agendaController.dart';
+import 'package:agenda_de_contatos/controller/agendaController.dart';
 import 'package:agenda_de_contatos/views/cadastro.dart';
 import 'package:flutter/material.dart';
 
+import 'loginView.dart';
+
 class Listagem extends StatefulWidget {
   AgendaController agendaController;
+  SharedSessao ssessao = SharedSessao();
   Listagem({super.key, required this.agendaController});
 
   @override
@@ -29,6 +33,7 @@ class Listagem_State extends State<Listagem> {
     loadData();
   }
 
+
   void loadData(){
     setState(() {
       _futureContatos = widget.agendaController.getListaContatos();
@@ -38,7 +43,11 @@ class Listagem_State extends State<Listagem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Lista de Contatos")),
+        appBar: AppBar(title: const Text("Lista de Contatos"), actions: [IconButton(icon: Icon(Icons.logout) ,onPressed: () async{
+          await widget.ssessao.removerToken();
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginView(agendaController: widget.agendaController)),
+                  (Route<dynamic> route) => false);
+        })],),
         body: Column(crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
