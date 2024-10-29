@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage{
 // Criando instância de FlutterSecureStorage
-final storage = FlutterSecureStorage();
+final storage  = FlutterSecureStorage();
 
 
 // Função para salvar o token de autenticação
@@ -23,7 +23,7 @@ Future<bool> estaLogado() async {
   return token != null;
 }
 
-/ /Função para remover o token de autenticação (logout)
+//Função para remover o token de autenticação (logout)
 Future<void> removerToken() async {
 await storage.delete(key: 'auth_token');
 }
