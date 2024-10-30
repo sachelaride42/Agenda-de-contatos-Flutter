@@ -1,4 +1,4 @@
-class Login{
+class Login {
   int? id;
   String usuario;
   String senha;
@@ -6,24 +6,18 @@ class Login{
   Login({this.id, required this.usuario, required this.senha});
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'usuario': usuario,
-      'senha': senha
-    };
+    return {'id': id, 'usuario': usuario, 'senha': senha};
   }
 
-  void setId(int id){
+  void setId(int id) {
     this.id = id;
   }
 
-
-  void setUsuario(String nome){
-    this.usuario = nome;
+  void setUsuario(String nome) {
+    usuario = nome;
   }
 
-  void setSenha(String senha){
+  void setSenha(String senha) {
     this.senha = senha;
   }
-
 }

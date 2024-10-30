@@ -12,24 +12,33 @@ void main() {
 
 class MyApp extends StatelessWidget {
   AgendaController ac = AgendaController();
+
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: FutureBuilder<bool>(
-        future: SharedSessao().estaLogado(), // Verifica se o usuário está logado
+        future:
+            SharedSessao().estaLogado(), // Verifica se o usuário está logado
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Scaffold(
-              body: Center(child: CircularProgressIndicator()),  // Mostra um "carregando" enquanto verifica
+            return const Scaffold(
+              body: Center(
+                  child:
+                      CircularProgressIndicator()), // Mostra um "carregando" enquanto verifica
             );
           } else if (snapshot.hasError) {
-            return Scaffold(
+            return const Scaffold(
               body: Center(child: Text('Erro ao verificar o estado de login')),
             );
           } else if (snapshot.data == true) {
-            return Listagem(agendaController: ac);  // Se o usuário está logado, vai para a tela de listagem
+            return Listagem(
+                agendaController:
+                    ac); // Se o usuário está logado, vai para a tela de listagem
           } else {
-            return LoginView(agendaController: ac);  // Se o usuário não está logado, vai para a tela de login
+            return LoginView(
+                agendaController:
+                    ac); // Se o usuário não está logado, vai para a tela de login
           }
         },
       ),
