@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1006642322487",
+    "firebase_url": "https://mobile-dev-andre-default-rtdb.firebaseio.com",
+    "project_id": "mobile-dev-andre",
+    "storage_bucket": "mobile-dev-andre.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006642322487:android:978135d07c9f692aa073b2",
+        "android_client_info": {
+          "package_name": "com.example.agenda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDPZQ4ICQ1KNaG2Z20SwQz1iIvrdsHgIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

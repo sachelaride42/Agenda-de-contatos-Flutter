@@ -1,5 +1,4 @@
 import 'package:agenda_de_contatos/models/autenticacao/secureStorage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../controller/agendaController.dart';
 import '../controller/loginController.dart';

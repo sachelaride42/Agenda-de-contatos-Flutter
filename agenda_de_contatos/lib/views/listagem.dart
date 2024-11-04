@@ -1,5 +1,4 @@
 import 'package:agenda_de_contatos/models/autenticacao/secureStorage.dart';
-import 'package:agenda_de_contatos/models/autenticacao/sharedSession.dart';
 import 'package:agenda_de_contatos/models/contato.dart';
 import 'package:agenda_de_contatos/controller/agendaController.dart';
 import 'package:agenda_de_contatos/views/cadastro.dart';
@@ -27,12 +26,12 @@ class Listagem_State extends State<Listagem> {
     loadData();
   }
 
-  @override
+  /*@override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     loadData();
-  }
+  }*/
 
   void loadData() {
     setState(() {
